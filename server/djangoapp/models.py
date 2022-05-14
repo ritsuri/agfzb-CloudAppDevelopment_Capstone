@@ -32,7 +32,7 @@ class CarMake(models.Model):
 # User model
 class CarModel(models.Model):
     dealer_id = models.IntegerField(null=False, max_length=30, default='xx')
-    car_type = models.CharField(null=False, max_length=30, default='doe')
+    car_type = models.CharField(null=False, max_length=30, default='type of car')
     year = models.DateField(null=True)
     carmake = models.ForeignKey(CarMake, on_delete=models.CASCADE)
     

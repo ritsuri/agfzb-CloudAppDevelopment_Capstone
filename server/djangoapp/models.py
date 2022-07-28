@@ -15,6 +15,7 @@ from django.utils.timezone import now
 class CarMake(models.Model):
     name = models.CharField(null=False, max_length=30, default='please input your name')
     description = models.CharField(null=False, max_length=30, default='information of car model')
+    model = models.ForeignKey(CarModel, on_delete=models.CASCADE)
     
     # Create a toString method for object string representation
     def __str__(self):
@@ -29,12 +30,18 @@ class CarMake(models.Model):
 # - Any other fields you would like to include in car model
 # - __str__ method to print a car make object
 
+model_choices = (
+    ('Sedan', 'Sedan'),
+    ('SUV', 'SUV'),
+    ('Wagon', 'Wagon')
+)
+
 # User model
 class CarModel(models.Model):
     dealer_id = models.IntegerField(null=False, max_length=30, default='xx')
-    car_type = models.CharField(null=False, max_length=30, default='type of car')
+    car_type = models.CharField(null=False, max_length=30, choices=model_choices)
     year = models.DateField(null=True)
-    carmake = models.ForeignKey(CarMake, on_delete=models.CASCADE)
+    
     
     # Create a toString method for object string representation
     def __str__(self):

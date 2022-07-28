@@ -39,6 +39,7 @@ model_choices = (
 # User model
 class CarModel(models.Model):
     dealer_id = models.IntegerField(null=False, max_length=30, default='xx')
+    name = models.CharField(null=False, max_length=30, default='please input name of car model')
     car_type = models.CharField(null=False, max_length=30, choices=model_choices)
     year = models.DateField(null=True)
     

@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils.timezone import now
 
-
 # Create your models here.
 
 # <HINT> Create a Car Make model `class CarMake(models.Model)`:
@@ -15,8 +14,8 @@ from django.utils.timezone import now
 class CarMake(models.Model):
     name = models.CharField(null=False, max_length=30, default='please input your name')
     description = models.CharField(null=False, max_length=30, default='information of car model')
-    model = models.ForeignKey(CarModel, on_delete=models.CASCADE)
     
+
     # Create a toString method for object string representation
     def __str__(self):
         return self.name + " " + self.description
@@ -39,14 +38,17 @@ model_choices = (
 # User model
 class CarModel(models.Model):
     dealer_id = models.IntegerField(null=False, max_length=30, default='xx')
-    name = models.CharField(null=False, max_length=30, default='please input name of car model')
+    #modelname = models.CharField(null=False, max_length=30, default='please input name of car model')
     car_type = models.CharField(null=False, max_length=30, choices=model_choices)
+    carmake = models.ForeignKey(CarMake, on_delete=models.CASCADE)
     year = models.DateField(null=True)
     
     
     # Create a toString method for object string representation
     def __str__(self):
         return self.car_type + " " + self.year
+
+
 
 # <HINT> Create a plain Python class `CarDealer` to hold dealer data
 

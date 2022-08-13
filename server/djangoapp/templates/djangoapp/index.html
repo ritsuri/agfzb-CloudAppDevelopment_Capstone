@@ -24,8 +24,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="#">About us <span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" href="#">Contact us</a>
+            <a class="nav-item nav-link active" href="{% url 'djangoapp:about' %}">About us <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="#">Dealer reviews</a>
             <a class="nav-item nav-link" href="#">Pricing</a>
             <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
           </div>
@@ -67,7 +67,7 @@
             {% for dealer in dealership_list %}
             <tr>
                 <td>{{dealer.id}}</td>
-                <td>{{dealer.full_name}}</td>
+                <td><a href="{% url 'djangoapp:dealer_details' dealer.id %}">{{dealer.full_name}}</a></td>
                 <td>{{dealer.city}}</td>
                 <td>{{dealer.address}}</td>
                 <td>{{dealer.zip}}</td>

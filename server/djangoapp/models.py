@@ -91,3 +91,6 @@ class DealerReview:
         self.review = review
         self.sentiment = sentiment
         self.time = now()
+        
+    def __str__(self):
+        return self.name

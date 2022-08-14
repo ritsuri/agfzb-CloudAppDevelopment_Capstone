@@ -69,18 +69,20 @@ def get_dealer_reviews_from_cf(url, dealerId):
     if json_result:
 
         # Here we can add further refinement to handle 404 and 500
-        if json_result["code"] != 200:
-            return results
+        #if json_result["code"] != 200:
+         #   return results
 
-        reviews = json_result["response"]
+        reviews = json_result["body"]["data"]
         # For each dealer object
         for review_doc in reviews:
+            if dealerId == review_doc.get("dealership"):
             # Create a CarDealer object with values in `doc` object
-            review_obj = DealerReview(id=review_doc["id"], dealership=review_doc["dealership"], name=review_doc.get("name", ""), car_make=review_doc.get("car_make", "NA"),
-                                   car_model=review_doc.get("car_model", "NA"), car_year=review_doc.get("car_year", "NA"), purchase=review_doc.get("purchase", False),
-                                   purchase_date=review_doc.get("purchase_date", "NA"), review=review_doc.get("review", ""))
-            review_obj.sentiment = analyze_review_sentiments(review_obj.review)
-            results.append(review_obj)
+                review_obj = DealerReview(id=review_doc["id"], dealership=review_doc["dealership"], name=review_doc.get("name", ""), car_make=review_doc.get("car_make", "NA"),
+                                    car_model=review_doc.get("car_model", "NA"), car_year=review_doc.get("car_year", "NA"), purchase=review_doc.get("purchase", False),
+                                    purchase_date=review_doc.get("purchase_date", "NA"), review=review_doc.get("review", ""))
+                
+                review_obj.sentiment = analyze_review_sentiments(review_obj.review)
+                results.append(review_obj)
 
     return results
 

@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 # from .models import related models
 from .models import CarModel, CarDealer
 # from .restapis import related methods
-from .restapis import get_request, get_dealers_from_cf, get_dealer_reviews_from_cf, get_dealer_by_id_from_cf
+from .restapis import get_request, post_request, get_dealers_from_cf, get_dealer_reviews_from_cf, get_dealer_by_id_from_cf
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from datetime import datetime
@@ -149,7 +149,7 @@ def add_review(request, dealer_id, dealer_name):
 
     if request.method == 'GET':
         try:
-            context["cars"] = CarModel.objects.filter(dealerId = dealer_id)
+            context["cars"] = CarModel.objects.filter(dealer_id = dealer_id)
         except:
             return redirect('djangoapp:index')
         context["dealer_id"] = dealer_id
@@ -165,8 +165,8 @@ def add_review(request, dealer_id, dealer_name):
         purchase = True if purchase_check=='on' else False
         purchase_date = request.POST['purchasedate']
         car = CarModel.objects.get(pk = request.POST['car'])
-        car_make = car.make.name
-        car_model = car.name
+        car_make = car.carmake.name
+        car_model = car.modelname
         car_year = car.year
         review = {
             "time": time,

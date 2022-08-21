@@ -72,7 +72,7 @@
                 <h6 class="text-dark"><strong>Select your car (model-make-year)</strong></h6>
                 <select name="car" id="car" class="form-select" required>
                     {% for car in cars %}
-                        <option selected value={{car.id}}>{{car.name}}-{{car.make}}-{{ car.year }}</option>
+                        <option selected value={{car.id}}> {{ car.modelname }}-{{ car.carmake }}-{{ car.year }}</option>
                     {% endfor %}
                 </select>
                 <p></p>

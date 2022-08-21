@@ -144,4 +144,48 @@ def get_dealer_details(request, dealer_id, dealer_name):
 # Create a `add_review` view to submit a review
 # def add_review(request, dealer_id):
 # ...
+def add_review(request, dealer_id, dealer_name):
+    context = {}
+
+    if request.method == 'GET':
+        try:
+            context["cars"] = CarModel.objects.filter(dealerId = dealer_id)
+        except:
+            return redirect('djangoapp:index')
+        context["dealer_id"] = dealer_id
+        context["dealer"] = dealer_name
+        return render(request, 'djangoapp/add_review.html', context)
+    elif request.method == 'POST':
+        time = datetime.utcnow().isoformat(),
+        id = int(dealer_id)
+        name = request.user.first_name + ' ' + request.user.last_name
+        another = ""
+        review = request.POST['content']
+        purchase_check = request.POST.get('purchasecheck', 'off')
+        purchase = True if purchase_check=='on' else False
+        purchase_date = request.POST['purchasedate']
+        car = CarModel.objects.get(pk = request.POST['car'])
+        car_make = car.make.name
+        car_model = car.name
+        car_year = car.year
+        review = {
+            "time": time,
+            "id": int(dealer_id),
+            "name": name,
+            "dealership": int(dealer_id),
+            "another": another,
+            "review": review,
+            "purchase": purchase,
+            "purchase_date": purchase_date,
+            "car_make": car_make,
+            "car_model": car_model,
+            "car_year": car_year
+        }
+        json_payload = {
+            "review": review
+        }
+        response = post_request("https://3d5a0256.us-south.apigw.appdomain.cloud/api3/review", json_payload)
+        return redirect('djangoapp:dealer_details', dealer_id=dealer_id, dealer_name=dealer_name)
+    else:
+        return render(request, 'djangoapp/index.html', context)
 

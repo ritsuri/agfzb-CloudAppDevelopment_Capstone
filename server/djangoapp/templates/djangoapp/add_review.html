@@ -11,6 +11,89 @@
 
 </head>
     <body>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Dealership Review</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+              <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="{% url 'djangoapp:about' %}">About us <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="#">Dealer reviews</a>
+                <a class="nav-item nav-link" href="#">Pricing</a>
+                <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+              </div>
+              <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                <li>
+                    <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
+                    <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
+                </li>
+                {% else %}
+                <li>
+                    <form class="form-inline" action="{% url 'djangoapp:login' %}" method="post">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Username" name="username" >
+                            <input type="password" class="form-control" placeholder="Password" name="psw" >
+                            <button class="btn btn-primary" type="submit">Login</button>
+                            <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Sign Up</a>
+                        </div>
+                    </form>
+                </li>
+                {% endif %}
+            </ul>
+            </div>
+          </nav>
+
     <!--Add review form here -->
+
+    <form action="{% url 'djangoapp:add_review' dealer_id dealer %}" method="post">
+        {% csrf_token %}
+        <div class="container">
+            <p></p>
+            <div class="form-group">
+                <h2>Add a review about <strong>{{ dealer }}</strong></h2>
+                <p></p>
+                <h6 class="text-dark"><strong>Enter de review content</strong></h6>
+                <textarea class="form-control" id="content" name="content" rows="3" required placeholder="Please give us a feedback for {{ dealer }}"></textarea>
+                <p></p>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="purchasecheck" id="purchasecheck">
+                <label class="form-check-label text-dark" for="purchasecheck">Has purchased the car from {{ dealer }}?</label>
+                <label class="form-check-label" for="purchasecheck">(select purchased car information below if checked)</label>
+                <p></p>
+            </div>
+
+            <div class="form-group">
+                <h6 class="text-dark"><strong>Select your car (model-make-year)</strong></h6>
+                <select name="car" id="car" class="form-select" required>
+                    {% for car in cars %}
+                        <option selected value={{car.id}}>{{car.name}}-{{car.make}}-{{ car.year }}</option>
+                    {% endfor %}
+                </select>
+                <p></p>
+            </div>
+
+            <div class="form-group">
+                <h6 class="text-dark"><strong>Select your Purchased Date</strong></h6>
+                <p></p>
+                <input class="date-own form-control" type="text" name="purchasedate" id="purchasedate" required>
+                <p></p>
+            </div>
+            <button class="btn btn-primary me-3" type="submit">Submit</button> <!--Style button with .btn and .btn-primary class -->
+        </div>
+    </form>
+
     </body>
+
+    <script type="text/javascript">
+        $('.date-own').datepicker({
+           format: 'mm/dd/yyyy'
+         });
+    </script>
+
 </html>

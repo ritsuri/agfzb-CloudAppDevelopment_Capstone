@@ -30,9 +30,14 @@ class CarMake(models.Model):
 # - __str__ method to print a car make object
 
 model_choices = (
-    ('Sedan', 'Sedan'),
+    ('SEDAN', 'Sedan'),
     ('SUV', 'SUV'),
-    ('Wagon', 'Wagon')
+    ('WAGON', 'WAGON'),
+    ('COUPE', 'Coupe'),
+    ('SPORT', 'Sport'),
+    ('HATCHBACK', 'Hatchback'),
+    ('CONVERTIBLE', 'Convertible'),
+    ('MINIVAN', 'Mini Van'),
 )
 
 # User model

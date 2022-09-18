@@ -27,8 +27,11 @@ DEBUG = True
 
 APPEND_SLASH = True
 
-ALLOWED_HOSTS = ["localhost"]
-# ritbestcars.au-syd.cf.appdomain.cloud
+ALLOWED_HOSTS = [
+    "localhost",
+    "ritbestcars.au-syd.cf.appdomain.cloud"
+]
+
 
 # Application definition
 
